@@ -7,8 +7,9 @@ function addNote() {
     if(notedesc.value.length >= 10 && noteTitle.value.length >= 5){
     // var liTitle = 
     var li = document.createElement("li");
-    li.innerHTML = noteTitle.value + "<br>" + notedesc.value;
-    li.style.color = "royalblue";
+    li.innerHTML = "<u>TITLE: </u><br />" + noteTitle.value + "<br /> <u> DESCRIPTION: </u><br />" + notedesc.value + "<br>";
+    li.style.fontStyle = "italic";
+    li.style.fontWeight = "600";
 
 
   ///// Creating Edit Button /////
@@ -73,20 +74,19 @@ function delNotes() {
 function editNote(e){
   var notedesc = document.getElementById("notedesc");
   var noteTitle = document.getElementById("noteTitle");
-  notedesc.nextElementSibling.disabled = true;
+  notedesc.nextElementSibling.disabled = true; //add btn
   var ab = e.parentNode; //li
-  console.log(ab); //li
-  noteTitle.value = ab.firstChild.nodeValue;
-  notedesc.value = ab.firstChild.nextSibling.nextSibling.nodeValue;
-  ab.firstChild.nextSibling.nextSibling.nextSibling.style.display = "none";  //editbtn
-  ab.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.style.display = "inline-block" //update btn
+  noteTitle.value = ab.firstChild.nextSibling.nextSibling.nodeValue;
+  notedesc.value = ab.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousSibling.nodeValue;
+  ab.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.style.display = "none";  //editbtn
+  ab.lastChild.previousSibling.previousSibling.style.display = "inline-block" //update btn
   var parentol = ab.parentNode; //ol
   var olchilds = parentol.children; //li's in array
   for (var i = 0; i < olchilds.length; i++){
-    olchilds[i].firstElementChild.nextElementSibling.disabled = true; //editBtn disabled
-    olchilds[i].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.disabled = true; //delbtn disabled
-    }
+    olchilds[i].lastChild.previousSibling.previousSibling.previousSibling.disabled = true; //editBtn disabled
+    olchilds[i].lastChild.previousSibling.disabled = true; //delbtn disabled
   }
+}
 
 
 
@@ -98,35 +98,33 @@ function updNote(g){
     var noteTitle = document.getElementById("noteTitle");
     if(notedesc.value.length >= 10 && noteTitle.value.length >= 5){
     notedesc.nextElementSibling.disabled = false; //add btn
-    parent.firstChild.nextSibling.nextSibling.nodeValue = notedesc.value;
-    parent.firstChild.nodeValue = noteTitle.value;
+    parent.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousSibling.nodeValue = notedesc.value;
+    parent.firstChild.nextSibling.nextSibling.nodeValue = noteTitle.value;
     notedesc.value = "";
     noteTitle.value = "";
-    parent.firstChild.nextSibling.nextSibling.nextSibling.style.display = "inline-block";  ///editbtn
-    parent.firstChild.nextSibling.nextSibling.nextSibling.nextSibling.style.display = "none"; //update btn
+    parent.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.style.display = "inline-block";  ///editbtn
+    parent.lastChild.previousSibling.previousSibling.style.display = "none"; //update btn
     var ab = g.parentNode; //li
     var parentol = ab.parentNode; //ol
     var olchilds = parentol.children; //li's in array
     for (var i = 0; i < olchilds.length; i++){
-      olchilds[i].firstElementChild.nextElementSibling.disabled = false; //editBtn disabled
-      olchilds[i].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.disabled = false; //delbtn disabled
+      olchilds[i].lastChild.previousSibling.previousSibling.previousSibling.disabled = false; //editBtn disabled
+      olchilds[i].lastChild.previousSibling.disabled = false; //delbtn disabled
       }
     }
 
     else{
       alert("Enter A Title Of Atleast 5 Characters.... AND List Note Of Atleast 10 Characters........");
-    noteTitle.value = parent.firstChild.nodeValue;
-    notedesc.value = parent.firstChild.nextSibling.nextSibling.nodeValue;
+    noteTitle.value = parent.firstChild.nextSibling.nextSibling.nodeValue;
+    notedesc.value = parent.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousSibling.nodeValue;
     }
 }
 
 
-
-function delNote(e) {
+function delNote(e){
     e.parentNode.remove();
     var notedesc = document.getElementById("notedesc");
     notedesc.value = "";
-    notedesc.nextElementSibling.disabled = false;
+    notedesc.nextElementSibling.disabled = false; // add btn
     var noteTitle = document.getElementById("noteTitle");
-    noteTitle.value = "";
-}
+    noteTitle.value = "";}
