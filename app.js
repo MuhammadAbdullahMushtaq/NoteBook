@@ -17,17 +17,17 @@ console.log(database);
 
 
 
-var noteList = document.getElementById("noteList");
+const noteList = document.getElementById("noteList");
 
-function addNote() {
-  var noteTitle = document.getElementById("noteTitle");
-  var notedesc = document.getElementById("notedesc");
+let addNote = () => {
+  let noteTitle = document.getElementById("noteTitle");
+  let notedesc = document.getElementById("notedesc");
 
     if(notedesc.value.length >= 10 && noteTitle.value.length >= 5){
 
       //                            ..........DB...........
-    var key = database.ref("/").push().key;
-    var noteBook = {
+    let key = database.ref("/").push().key;
+    let noteBook = {
       desc : notedesc.value,
       key : key,
       title : noteTitle.value
@@ -47,14 +47,14 @@ function addNote() {
 
 database.ref("notes").on("child_added" , function(data){
 
-  var li = document.createElement("li");
+  let li = document.createElement("li");
   li.innerHTML = "<u>TITLE: </u><br />" + data.val().title + "<br /> <u> DESCRIPTION: </u><br />" + data.val().desc + "<br>";
   li.style.fontStyle = "italic";
   li.style.fontWeight = "600";
   
   
   ///// Creating Edit Button /////
-  var edtBtn = document.createElement("button");
+  let edtBtn = document.createElement("button");
   edtBtn.innerHTML = "EDIT";
   edtBtn.setAttribute("onclick", "editNote(this)");
   edtBtn.classList = ("button");
@@ -62,7 +62,7 @@ database.ref("notes").on("child_added" , function(data){
   
   
   ///// Creating Delete Button /////
-  var delBtn = document.createElement("button");
+  let delBtn = document.createElement("button");
   delBtn.innerHTML = "DELETE";
   delBtn.setAttribute("onclick", "delNote(this)");
   delBtn.setAttribute("id" , data.val().key)
@@ -71,12 +71,12 @@ database.ref("notes").on("child_added" , function(data){
   
   
   /////Creating Hr //////
-  var hr = document.createElement("hr");
+  let hr = document.createElement("hr");
   hr.classList = ("hr");
   
   
   /////Creating Update Button/////
-  var updBtn = document.createElement("button");
+  let updBtn = document.createElement("button");
   updBtn.innerHTML = "UPDATE";
   updBtn.setAttribute("onclick", "updNote(this)");
   updBtn.setAttribute("id" , data.val().key)
@@ -95,10 +95,10 @@ database.ref("notes").on("child_added" , function(data){
 
 
 
-function delNotes() {
+let delNotes = () => {
   noteList.innerHTML = "";
-  var notedesc = document.getElementById("notedesc");
-  var noteTitle = document.getElementById("noteTitle");
+  let notedesc = document.getElementById("notedesc");
+  let noteTitle = document.getElementById("noteTitle");
   notedesc.value = "";
   noteTitle.value = "";
   notedesc.nextElementSibling.disabled = false;
@@ -109,17 +109,17 @@ function delNotes() {
 
 
 
-function editNote(e){
-  var noteTitle = document.getElementById("noteTitle");
-  var notedesc = document.getElementById("notedesc");
+let editNote = e => {
+  let noteTitle = document.getElementById("noteTitle");
+  let notedesc = document.getElementById("notedesc");
   notedesc.nextElementSibling.disabled = true; //add btn
-  var ab = e.parentNode; //li
+  let ab = e.parentNode; //li
   noteTitle.value = ab.firstChild.nextSibling.nextSibling.nodeValue;
   notedesc.value = ab.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousSibling.nodeValue;
   ab.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.style.display = "none";  //editbtn
   ab.lastChild.previousSibling.previousSibling.style.display = "inline-block" //update btn
-  var parentol = ab.parentNode; //ol
-  var olchilds = parentol.children; //li's in array
+  let parentol = ab.parentNode; //ol
+  let olchilds = parentol.children; //li's in array
   for (var i = 0; i < olchilds.length; i++){
     olchilds[i].lastChild.previousSibling.previousSibling.previousSibling.disabled = true; //editBtn disabled
     olchilds[i].lastChild.previousSibling.disabled = true; //delbtn disabled
@@ -128,12 +128,12 @@ function editNote(e){
 
 
 
-function updNote(g){
-    var parent = g.parentNode; //li
+let updNote = g => {
+    let parent = g.parentNode; //li
 
   //////notedesc Value In li//////
-    var noteTitle = document.getElementById("noteTitle");
-    var notedesc = document.getElementById("notedesc");
+    let noteTitle = document.getElementById("noteTitle");
+    let notedesc = document.getElementById("notedesc");
     if(notedesc.value.length >= 10 && noteTitle.value.length >= 5){
       notedesc.nextElementSibling.disabled = false; //add btn
       parent.firstChild.nextSibling.nextSibling.nodeValue = noteTitle.value;
@@ -142,11 +142,11 @@ function updNote(g){
       noteTitle.value = "";
       parent.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.style.display = "inline-block";  ///editbtn
       parent.lastChild.previousSibling.previousSibling.style.display = "none"; //update btn
-      var ab = g.parentNode; //li
-      var parentol = ab.parentNode; //ol
-      var olchilds = parentol.children; //li's in array
-      var descValue = parent.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousSibling.nodeValue;
-      var titleValue = parent.firstChild.nextSibling.nextSibling.nodeValue;
+      let ab = g.parentNode; //li
+      let parentol = ab.parentNode; //ol
+      let olchilds = parentol.children; //li's in array
+      let descValue = parent.lastChild.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousSibling.nodeValue;
+      let titleValue = parent.firstChild.nextSibling.nextSibling.nodeValue;
 
       //                          -------------------DB---------------------
       database.ref("notes").child(g.id).update({
@@ -167,11 +167,11 @@ function updNote(g){
 }
 
 
-function delNote(e){
+let delNote = e => {
     e.parentNode.remove();
-    var noteTitle = document.getElementById("noteTitle");
+    let noteTitle = document.getElementById("noteTitle");
     noteTitle.value = "";
-    var notedesc = document.getElementById("notedesc");
+    let notedesc = document.getElementById("notedesc");
     notedesc.value = "";
     notedesc.nextElementSibling.disabled = false; // add btn
     //                    ------------------------DB-----------------------
