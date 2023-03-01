@@ -104,7 +104,7 @@ body{
     align-items: center;
 }
 .inputList ol{
-    width: 50%;
+    width: 100%;
     max-width: 600px;
     min-height: 400px;
     list-style-position: inside;
